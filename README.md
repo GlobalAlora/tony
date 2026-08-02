@@ -131,3 +131,4 @@ src/
 └── test/
 supabase/migrations/        # SQL de la tabla proposals
 ```
+# tony
