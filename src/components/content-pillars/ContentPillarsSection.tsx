@@ -1,0 +1,32 @@
+import { ContentPillarCard } from "@/components/content-pillars/ContentPillarCard";
+import { Reveal } from "@/components/ui/Reveal";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { CONTENT_PILLARS } from "@/lib/constants/creator-data";
+import { SECTION_IDS } from "@/lib/constants/site";
+
+export function ContentPillarsSection() {
+  return (
+    <section
+      id={SECTION_IDS.pillars}
+      aria-labelledby="pillars-heading"
+      className="border-t border-line/60 py-[var(--spacing-section)]"
+    >
+      <div className="mx-auto max-w-6xl px-[var(--spacing-gutter)]">
+        <SectionHeading
+          headingId="pillars-heading"
+          eyebrow="Formatos"
+          title="Cuatro pilares de contenido, un mismo tono"
+          lead="Cada pilar es un formato probado con su comunidad — listo para adaptarse al brief de una marca."
+        />
+
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {CONTENT_PILLARS.map((pillar, i) => (
+            <Reveal key={pillar.id} delayMs={i * 60}>
+              <ContentPillarCard pillar={pillar} />
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
