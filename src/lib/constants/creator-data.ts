@@ -227,32 +227,34 @@ export const CONTENT_PILLARS: ContentPillar[] = [
 ];
 
 /**
- * PLACEHOLDER — sample audience breakdown so the chart component and layout
- * can be reviewed before real data exists. Replace with exports from TikTok
- * Analytics / Meta Business Suite. Never cite these numbers as fact.
+ * Real export from TikTok Studio → Analytics → Followers tab (@t0ni_00,
+ * captured 2026-08-03). Followers tab specifically — not "Viewers", which
+ * includes non-follower For You page traffic and skews younger/more
+ * Argentina-heavy than the actual follower base.
  */
-export const AUDIENCE_DATA_IS_PLACEHOLDER = true;
+export const AUDIENCE_DATA_IS_PLACEHOLDER = false;
 
 export const AUDIENCE_AGE_BREAKDOWN = [
-  { bracket: "13-17", percent: 18 },
-  { bracket: "18-24", percent: 46 },
-  { bracket: "25-34", percent: 26 },
+  { bracket: "18-24", percent: 50.2 },
+  { bracket: "25-34", percent: 34.9 },
   { bracket: "35-44", percent: 8 },
-  { bracket: "45+", percent: 2 },
+  { bracket: "45-54", percent: 3.4 },
+  { bracket: "55+", percent: 3.5 },
 ];
 
 export const AUDIENCE_GENDER_BREAKDOWN = [
-  { label: "Mujeres", percent: 58 },
-  { label: "Hombres", percent: 41 },
-  { label: "Otro / prefiere no decir", percent: 1 },
+  { label: "Mujeres", percent: 64 },
+  { label: "Hombres", percent: 36 },
+  { label: "Otro / prefiere no decir", percent: 0 },
 ];
 
 export const AUDIENCE_TOP_LOCATIONS = [
-  { label: "Buenos Aires, AR", percent: 38 },
-  { label: "CABA, AR", percent: 21 },
-  { label: "Córdoba, AR", percent: 9 },
-  { label: "Santa Fe, AR", percent: 6 },
-  { label: "Resto de LATAM", percent: 14 },
+  { label: "México", percent: 22.7 },
+  { label: "Argentina", percent: 21.3 },
+  { label: "Colombia", percent: 6.1 },
+  { label: "Perú", percent: 4.7 },
+  { label: "Chile", percent: 3.2 },
+  { label: "Resto del mundo", percent: 42 },
 ];
 
 export interface CaseStudy {

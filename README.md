@@ -107,8 +107,6 @@ pnpm build       # build de producción
 
 Estos espacios están armados y funcionando, pero con placeholders claramente marcados en el código — buscá `PLACEHOLDER` en `src/lib/constants/creator-data.ts`:
 
-- **Fotos/video real del hero** → reemplazar en `src/components/hero/Hero.tsx` (prop `src` de `MediaPlaceholder`) una vez que exista `/public/images/hero.jpg` o similar.
-- **Métricas de audiencia (edad/género/ubicación)** → reemplazar `AUDIENCE_AGE_BREAKDOWN`, `AUDIENCE_GENDER_BREAKDOWN`, `AUDIENCE_TOP_LOCATIONS` con el export real de TikTok Analytics / Meta Business Suite, y poner `AUDIENCE_DATA_IS_PLACEHOLDER = false`.
 - **Alcance promedio por video** → completar el stat `avg-reach` en `HEADLINE_STATS`.
 - **Tarifas** → no se inventaron cifras en el FAQ ni en el schema (a propósito, para no publicar datos falsos). El formulario ya pide presupuesto estimado a la marca; si en algún momento querés publicar rangos orientativos propios, se agregan en `src/lib/constants/faq.ts`.
 
