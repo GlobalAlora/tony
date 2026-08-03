@@ -3,15 +3,17 @@ import { SocialEmbed } from "@/components/content-pillars/SocialEmbed";
 import type { ContentPillar } from "@/lib/constants/creator-data";
 
 export function ContentPillarCard({ pillar }: { pillar: ContentPillar }) {
+  const embedUrl = pillar.embedUrls?.[0];
+
   return (
     <article className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface-raised">
-      <div className="bg-surface-overlay p-3">
-        {pillar.embedUrl ? (
-          <SocialEmbed url={pillar.embedUrl} />
+      <div className="flex justify-center bg-surface-overlay p-3">
+        {embedUrl ? (
+          <SocialEmbed url={embedUrl} />
         ) : (
           <MediaPlaceholder
             alt={`Video de ejemplo — ${pillar.title}`}
-            label="Agregá un link de TikTok/Reel real en CONTENT_PILLARS (embedUrl)"
+            label="Agregá un link de TikTok/Reel real en CONTENT_PILLARS (embedUrls)"
             aspectRatio="9/16"
             className="mx-auto max-w-[240px]"
           />

@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/Button";
 import { MediaPlaceholder } from "@/components/ui/MediaPlaceholder";
-import { CREATOR, SOCIAL_PROFILES } from "@/lib/constants/creator-data";
+import { CREATOR, getSocialProfiles } from "@/lib/constants/creator-data";
 import { SECTION_IDS } from "@/lib/constants/site";
 
-export function Hero() {
+export async function Hero() {
+  const socialProfiles = await getSocialProfiles();
+
   return (
     <section
       id={SECTION_IDS.hero}
@@ -37,7 +39,7 @@ export function Hero() {
           </p>
 
           <dl className="mt-8 flex flex-wrap gap-x-8 gap-y-4">
-            {SOCIAL_PROFILES.map((profile) => (
+            {socialProfiles.map((profile) => (
               <div key={profile.platform}>
                 <dt className="text-xs font-medium uppercase tracking-wide text-ink-faint">
                   <a

@@ -42,6 +42,21 @@ export type ProposalInsert = Pick<
     >
   >;
 
+/** Mirrors `public.tiktok_oauth_tokens` (see supabase/migrations). Same `type`-not-`interface` rule applies. */
+export type TikTokTokenTableRow = {
+  id: number;
+  access_token: string;
+  refresh_token: string;
+  access_token_expires_at: string;
+  refresh_token_expires_at: string;
+  updated_at: string;
+};
+
+export type TikTokTokenInsert = Pick<
+  TikTokTokenTableRow,
+  "id" | "access_token" | "refresh_token" | "access_token_expires_at" | "refresh_token_expires_at"
+>;
+
 export type Database = {
   public: {
     Tables: {
@@ -49,6 +64,12 @@ export type Database = {
         Row: ProposalRow;
         Insert: ProposalInsert;
         Update: Partial<ProposalInsert>;
+        Relationships: [];
+      };
+      tiktok_oauth_tokens: {
+        Row: TikTokTokenTableRow;
+        Insert: TikTokTokenInsert;
+        Update: Partial<TikTokTokenInsert>;
         Relationships: [];
       };
     };

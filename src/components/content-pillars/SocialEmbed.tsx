@@ -1,70 +1,50 @@
-"use client";
-
-import Script from "next/script";
-import { useEffect } from "react";
-
-declare global {
-  interface Window {
-    tiktokEmbedLoad?: () => void;
-    instgrm?: { Embeds: { process: () => void } };
-  }
-}
+import { LazyEmbed } from "@/components/content-pillars/LazyEmbed";
+import { getTikTokEmbedHtml } from "@/lib/tiktok/oembed";
 
 interface SocialEmbedProps {
   url: string;
 }
 
-function detectPlatform(url: string): "tiktok" | "instagram" | null {
+export function detectPlatform(url: string): "tiktok" | "instagram" | null {
   if (/tiktok\.com/.test(url)) return "tiktok";
   if (/instagram\.com/.test(url)) return "instagram";
   return null;
 }
 
 /**
- * Renders the official TikTok/Instagram oEmbed blockquote and lazy-loads
- * that platform's embed script — only when a real `embedUrl` is supplied,
- * so no third-party script ships while pillars are still placeholders.
+ * Renders the official embed markup for a TikTok/Instagram URL — but not
+ * the platform <Script> tag. That's hoisted once to the parent section
+ * (ContentPillarsSection) instead of one-per-card: loading embed.js
+ * multiple times on the same page had each instance's DOM scan race the
+ * others, non-deterministically collapsing some embeds to ~150px/1px on
+ * every reload.
+ *
+ * For TikTok, the markup comes from TikTok's own oEmbed API rather than
+ * being hand-rolled: embed.js's resize logic depends on the exact inline
+ * styles and fallback content that API returns. The result is handed to
+ * LazyEmbed so it only enters the DOM once its card is scrolled into view
+ * — see that file for why (staggers TikTok's own postMessage race).
+ * Returns null (caller falls back to the placeholder) if the oEmbed call
+ * fails for any reason.
  */
-export function SocialEmbed({ url }: SocialEmbedProps) {
+export async function SocialEmbed({ url }: SocialEmbedProps) {
   const platform = detectPlatform(url);
 
-  useEffect(() => {
-    if (platform === "tiktok") {
-      window.tiktokEmbedLoad?.();
-    }
-    if (platform === "instagram") {
-      window.instgrm?.Embeds.process();
-    }
-  }, [platform, url]);
-
   if (platform === "tiktok") {
-    const videoId = url.match(/\/video\/(\d+)/)?.[1];
-    return (
-      <>
-        <blockquote
-          className="tiktok-embed"
-          cite={url}
-          data-video-id={videoId}
-          style={{ maxWidth: "100%", minWidth: "260px" }}
-        >
-          <section />
-        </blockquote>
-        <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
-      </>
-    );
+    const html = await getTikTokEmbedHtml(url);
+    if (!html) return null;
+
+    return <LazyEmbed html={html} />;
   }
 
   if (platform === "instagram") {
     return (
-      <>
-        <blockquote
-          className="instagram-media"
-          data-instgrm-permalink={url}
-          data-instgrm-version="14"
-          style={{ width: "100%" }}
-        />
-        <Script src="https://www.instagram.com/embed.js" strategy="lazyOnload" />
-      </>
+      <blockquote
+        className="instagram-media"
+        data-instgrm-permalink={url}
+        data-instgrm-version="14"
+        style={{ width: "100%" }}
+      />
     );
   }
 

@@ -1,10 +1,16 @@
+import Script from "next/script";
 import { ContentPillarCard } from "@/components/content-pillars/ContentPillarCard";
+import { detectPlatform } from "@/components/content-pillars/SocialEmbed";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CONTENT_PILLARS } from "@/lib/constants/creator-data";
 import { SECTION_IDS } from "@/lib/constants/site";
 
 export function ContentPillarsSection() {
+  const platforms = new Set(
+    CONTENT_PILLARS.flatMap((p) => p.embedUrls ?? []).map(detectPlatform).filter(Boolean),
+  );
+
   return (
     <section
       id={SECTION_IDS.pillars}
@@ -19,7 +25,7 @@ export function ContentPillarsSection() {
           lead="Cada pilar es un formato probado con su comunidad — listo para adaptarse al brief de una marca."
         />
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-6 sm:grid-cols-2">
           {CONTENT_PILLARS.map((pillar, i) => (
             <Reveal key={pillar.id} delayMs={i * 60}>
               <ContentPillarCard pillar={pillar} />
@@ -27,6 +33,16 @@ export function ContentPillarsSection() {
           ))}
         </div>
       </div>
+
+      {/* Loaded once for the whole section — one <Script> per embed made
+          embed.js's DOM scans race each other and non-deterministically
+          collapse some players (see SocialEmbed.tsx). */}
+      {platforms.has("tiktok") && (
+        <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
+      )}
+      {platforms.has("instagram") && (
+        <Script src="https://www.instagram.com/embed.js" strategy="lazyOnload" />
+      )}
     </section>
   );
 }

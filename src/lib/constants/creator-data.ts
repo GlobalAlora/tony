@@ -9,6 +9,15 @@
  * and SEO/JSON-LD/FAQ code must never surface placeholder values as fact.
  */
 
+import {
+  formatFollowerCount,
+  getInstagramFollowerCount,
+} from "@/lib/instagram/live-stats";
+import {
+  formatCompactCount,
+  getTikTokLiveStats,
+} from "@/lib/tiktok/live-stats";
+
 export const CREATOR = {
   fullName: "Tony Piorno Polucci",
   displayName: "Tony Piorno",
@@ -21,7 +30,7 @@ export const CREATOR = {
   email: "piornotony@gmail.com",
   tagline: "Humor, vida universitaria y lifestyle para 357K+ personas.",
   bio: [
-    "Tony Piorno es creador de contenido en La Plata, Buenos Aires. Estudia arquitectura y combina el humor cotidiano con su vida universitaria en la serie \"Arqui\", además de contenido de lifestyle, haul y viajes.",
+    "Tony Piorno es creador de contenido en La Plata, Buenos Aires. Estudia arquitectura y combina el humor cotidiano con su vida universitaria en la serie \"Arqui\", además de contenido de lifestyle, haul y unboxing.",
     "Su tono es cercano, espontáneo y humorístico — el tipo de contenido que se comparte porque se siente real, no producido. Esa cercanía es lo que sostiene el engagement con su comunidad.",
   ],
 } as const;
@@ -116,12 +125,70 @@ export const HEADLINE_STATS: HeadlineStat[] = [
   },
 ];
 
+/**
+ * Live-data variants: both Instagram (Meta Graph API, System User token) and
+ * TikTok (Login Kit, OAuth token pair auto-refreshed via
+ * src/lib/tiktok/live-stats.ts) are fetched live and merged over the static
+ * values above. Any failure (missing token, expired/revoked auth, network
+ * error, Meta/TikTok outage) falls back to the static value — a third-party
+ * API hiccup must never take down these numbers on the page.
+ */
+export async function getSocialProfiles(): Promise<SocialProfile[]> {
+  const [instagramCount, tiktokStats] = await Promise.all([
+    getInstagramFollowerCount(),
+    getTikTokLiveStats(),
+  ]);
+
+  return SOCIAL_PROFILES.map((profile) => {
+    if (profile.platform === "instagram" && instagramCount !== null) {
+      return {
+        ...profile,
+        followers: instagramCount,
+        followersDisplay: formatFollowerCount(instagramCount),
+      };
+    }
+    if (profile.platform === "tiktok" && tiktokStats !== null) {
+      return {
+        ...profile,
+        followers: tiktokStats.followerCount,
+        followersDisplay: formatCompactCount(tiktokStats.followerCount),
+        secondaryMetric: {
+          ...profile.secondaryMetric,
+          value: formatCompactCount(tiktokStats.likesCount),
+        },
+      };
+    }
+    return profile;
+  });
+}
+
+export async function getHeadlineStats(): Promise<HeadlineStat[]> {
+  const [instagramCount, tiktokStats] = await Promise.all([
+    getInstagramFollowerCount(),
+    getTikTokLiveStats(),
+  ]);
+
+  return HEADLINE_STATS.map((stat) => {
+    if (stat.id === "instagram-followers" && instagramCount !== null) {
+      return { ...stat, value: formatFollowerCount(instagramCount) };
+    }
+    if (stat.id === "tiktok-followers" && tiktokStats !== null) {
+      return { ...stat, value: formatCompactCount(tiktokStats.followerCount) };
+    }
+    if (stat.id === "tiktok-likes" && tiktokStats !== null) {
+      return { ...stat, value: formatCompactCount(tiktokStats.likesCount) };
+    }
+    return stat;
+  });
+}
+
 export interface ContentPillar {
   id: string;
   title: string;
   description: string;
   keywords: string[];
-  embedUrl?: string;
+  /** Most pillars show one example video; "Lifestyle & haul" shows two (haul + unboxing). */
+  embedUrls?: string[];
 }
 
 export const CONTENT_PILLARS: ContentPillar[] = [
@@ -131,6 +198,7 @@ export const CONTENT_PILLARS: ContentPillar[] = [
     description:
       "Situaciones del día a día llevadas al sketch — el formato que más engagement genera dentro de su comunidad.",
     keywords: ["humor", "sketches", "comedia"],
+    embedUrls: ["https://www.tiktok.com/@t0ni_00/video/7443879490331118903"],
   },
   {
     id: "arqui",
@@ -138,20 +206,23 @@ export const CONTENT_PILLARS: ContentPillar[] = [
     description:
       "Serie propia sobre su día a día estudiando arquitectura: entregas, trasnoches, maquetas y la cultura de facultad.",
     keywords: ["universidad", "arquitectura", "estudiantes"],
+    embedUrls: ["https://www.tiktok.com/@t0ni_00/video/7632879811748171029"],
   },
   {
     id: "lifestyle",
     title: "Lifestyle & haul",
     description:
-      "Rutinas, compras y recomendaciones de producto en un formato conversacional, ideal para lanzamientos y unboxings.",
+      "Rutinas, compras y recomendaciones de producto en un formato conversacional, ideal para lanzamientos.",
     keywords: ["lifestyle", "haul", "producto"],
+    embedUrls: ["https://www.tiktok.com/@t0ni_00/video/7662175127110503700"],
   },
   {
-    id: "viajes",
-    title: "Viajes",
+    id: "unboxing",
+    title: "Unboxing & reseñas",
     description:
-      "Contenido de viaje con el mismo tono humorístico y cercano — bien recibido para turismo, aerolíneas y hotelería.",
-    keywords: ["viajes", "turismo"],
+      "Muestra el producto en cámara al abrirlo y da su opinión real — el formato preferido de las marcas para lanzamientos.",
+    keywords: ["unboxing", "reseñas", "producto"],
+    embedUrls: ["https://www.tiktok.com/@t0ni_00/video/7637289567766301972"],
   },
 ];
 
@@ -192,34 +263,42 @@ export interface CaseStudy {
   isExample: boolean;
 }
 
-/**
- * PLACEHOLDER — 3 example slots. Replace brandName/summary with real past
- * collaborations. isExample renders a visible "Caso de ejemplo" badge so
- * this is never mistaken for a real client by anyone viewing the page.
- */
 export const CASE_STUDIES: CaseStudy[] = [
   {
-    id: "case-1",
-    brandName: "Marca / cliente #1",
+    id: "shein",
+    brandName: "Shein",
     summary:
-      "Espacio para describir el objetivo de la campaña, el formato usado y el resultado principal en una línea.",
-    campaignType: "Post único",
-    isExample: true,
-  },
-  {
-    id: "case-2",
-    brandName: "Marca / cliente #2",
-    summary:
-      "Espacio para describir el objetivo de la campaña, el formato usado y el resultado principal en una línea.",
-    campaignType: "Serie de contenido",
-    isExample: true,
-  },
-  {
-    id: "case-3",
-    brandName: "Marca / cliente #3",
-    summary:
-      "Espacio para describir el objetivo de la campaña, el formato usado y el resultado principal en una línea.",
+      "Más de 5 videos reseñando productos de la marca, con más de 27K vistas combinadas.",
     campaignType: "Ambassador",
-    isExample: true,
+    isExample: false,
+  },
+  {
+    id: "adrenaline",
+    brandName: "Adrenaline",
+    summary: "Reseña de un pack 8x1 de gafas de sol.",
+    campaignType: "Post único",
+    isExample: false,
+  },
+  {
+    id: "luqstoff",
+    brandName: "Luqstoff",
+    summary: "Reseña de una pava eléctrica.",
+    campaignType: "Post único",
+    isExample: false,
+  },
+  {
+    id: "firmoo",
+    brandName: "Firmoo",
+    summary: "Reseña de dos modelos de anteojos para la marca mexicana Firmoo.",
+    campaignType: "Post único",
+    isExample: false,
+  },
+  {
+    id: "suprabond",
+    brandName: "Suprabond",
+    summary:
+      "Le enviaron el pegamento para mostrar su uso pegando maquetas de arquitectura.",
+    campaignType: "Post único",
+    isExample: false,
   },
 ];

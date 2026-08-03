@@ -23,7 +23,7 @@ const KEYWORDS = [
 
 export const metadata: Metadata = {
   title: `${CREATOR.displayName} — Influencer y Creador de Contenido en La Plata, Argentina`,
-  description: `Media kit oficial de ${CREATOR.displayName}: métricas de audiencia, pilares de contenido (humor, vida universitaria, lifestyle, viajes) y formulario de propuestas para marcas.`,
+  description: `Media kit oficial de ${CREATOR.displayName}: métricas de audiencia, pilares de contenido (humor, vida universitaria, lifestyle) y formulario de propuestas para marcas.`,
   keywords: KEYWORDS,
   openGraph: {
     type: "profile",

@@ -16,7 +16,7 @@ export function CaseStudiesSection() {
           headingId="cases-heading"
           eyebrow="Colaboraciones"
           title="Casos anteriores"
-          lead="Espacio listo para reemplazar por colaboraciones reales — objetivo, formato y resultado en una línea."
+          lead="Marcas con las que ya trabajó, el tipo de campaña y el resultado en una línea."
         />
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

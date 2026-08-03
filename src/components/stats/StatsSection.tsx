@@ -1,10 +1,12 @@
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StatCard } from "@/components/stats/StatCard";
-import { HEADLINE_STATS } from "@/lib/constants/creator-data";
+import { getHeadlineStats } from "@/lib/constants/creator-data";
 import { SECTION_IDS } from "@/lib/constants/site";
 
-export function StatsSection() {
+export async function StatsSection() {
+  const headlineStats = await getHeadlineStats();
+
   return (
     <section
       id={SECTION_IDS.stats}
@@ -20,7 +22,7 @@ export function StatsSection() {
         />
 
         <div className="mt-10 grid grid-cols-2 gap-4">
-          {HEADLINE_STATS.map((stat, i) => (
+          {headlineStats.map((stat, i) => (
             <Reveal key={stat.id} delayMs={i * 60} className={i === 0 ? "col-span-2" : undefined}>
               <StatCard stat={stat} featured={i === 0} />
             </Reveal>

@@ -32,7 +32,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     question: `¿Qué tipo de contenido hace ${CREATOR.displayName}?`,
     answer:
-      'Cuatro formatos principales: humor y sketches cotidianos, vida universitaria en la serie "Arqui" sobre su carrera de arquitectura, contenido de lifestyle y haul, y contenido de viajes.',
+      'Cuatro formatos principales: humor y sketches cotidianos, vida universitaria en la serie "Arqui" sobre su carrera de arquitectura, contenido de lifestyle y haul, y unboxing con reseñas de producto.',
   },
   {
     question: `¿Cuánto cobra ${CREATOR.displayName} por un post patrocinado?`,
@@ -41,8 +41,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: `¿Con qué marcas trabajó ${CREATOR.displayName} antes?`,
-    answer:
-      "El detalle de colaboraciones anteriores se está incorporando a este media kit. Para conocer casos recientes o coordinar una propuesta, escribí a piornotony@gmail.com o completá el formulario de este sitio.",
+    answer: `${CREATOR.displayName} trabajó con marcas como Shein (como ambassador), Adrenaline, Luqstoff, Firmoo y Suprabond, con reseñas de producto y contenido patrocinado. El detalle de cada colaboración está en la sección de casos de este media kit.`,
   },
   {
     question: `¿Cómo se contacta a ${CREATOR.displayName} para una propuesta de marca?`,
