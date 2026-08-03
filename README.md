@@ -105,9 +105,6 @@ pnpm build       # build de producción
 
 ## Contenido pendiente de cargar
 
-Estos espacios están armados y funcionando, pero con placeholders claramente marcados en el código — buscá `PLACEHOLDER` en `src/lib/constants/creator-data.ts`:
-
-- **Alcance promedio por video** → completar el stat `avg-reach` en `HEADLINE_STATS`.
 - **Tarifas** → no se inventaron cifras en el FAQ ni en el schema (a propósito, para no publicar datos falsos). El formulario ya pide presupuesto estimado a la marca; si en algún momento querés publicar rangos orientativos propios, se agregan en `src/lib/constants/faq.ts`.
 
 ## Estructura del proyecto

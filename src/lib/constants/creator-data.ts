@@ -119,9 +119,8 @@ export const HEADLINE_STATS: HeadlineStat[] = [
   {
     id: "avg-reach",
     label: "Alcance promedio por video",
-    value: "Cargando dato",
-    helpText: "Se completa con métricas reales de TikTok/Meta Analytics",
-    isPlaceholder: true,
+    value: "357.9K",
+    helpText: "Vistas promedio por video en TikTok (últimos 28 días)",
   },
 ];
 

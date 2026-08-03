@@ -1,4 +1,4 @@
-import { CREATOR, getSocialProfiles } from "@/lib/constants/creator-data";
+import { CREATOR, HEADLINE_STATS, getSocialProfiles } from "@/lib/constants/creator-data";
 
 export interface FaqItem {
   question: string;
@@ -20,6 +20,7 @@ export async function getFaqItems(): Promise<FaqItem[]> {
   const socialProfiles = await getSocialProfiles();
   const tiktok = socialProfiles.find((p) => p.platform === "tiktok")!;
   const instagram = socialProfiles.find((p) => p.platform === "instagram")!;
+  const avgReach = HEADLINE_STATS.find((s) => s.id === "avg-reach")!;
 
   return [
     {
@@ -32,7 +33,7 @@ export async function getFaqItems(): Promise<FaqItem[]> {
     },
     {
       question: "¿Cuál es el alcance promedio de sus videos en TikTok?",
-      answer: `El alcance promedio por video se publica en este media kit una vez cargado desde TikTok Analytics. Como referencia, la cuenta ${tiktok.handle} acumula ${tiktok.secondaryMetric.value} de likes totales sobre ${tiktok.followersDisplay} seguidores.`,
+      answer: `La cuenta ${tiktok.handle} promedia ${avgReach.value} vistas por video (últimos 28 días, datos de TikTok Studio), y acumula ${tiktok.secondaryMetric.value} de likes totales sobre ${tiktok.followersDisplay} seguidores.`,
     },
     {
       question: `¿Qué tipo de contenido hace ${CREATOR.displayName}?`,
