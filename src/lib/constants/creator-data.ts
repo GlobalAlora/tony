@@ -193,22 +193,6 @@ export interface ContentPillar {
 
 export const CONTENT_PILLARS: ContentPillar[] = [
   {
-    id: "humor",
-    title: "Humor y sketches cotidianos",
-    description:
-      "Situaciones del día a día llevadas al sketch — el formato que más engagement genera dentro de su comunidad.",
-    keywords: ["humor", "sketches", "comedia"],
-    embedUrls: ["https://www.tiktok.com/@t0ni_00/video/7443879490331118903"],
-  },
-  {
-    id: "arqui",
-    title: "Vida universitaria — \"Arqui\"",
-    description:
-      "Serie propia sobre su día a día estudiando arquitectura: entregas, trasnoches, maquetas y la cultura de facultad.",
-    keywords: ["universidad", "arquitectura", "estudiantes"],
-    embedUrls: ["https://www.tiktok.com/@t0ni_00/video/7632879811748171029"],
-  },
-  {
     id: "lifestyle",
     title: "Lifestyle & haul",
     description:
@@ -223,6 +207,22 @@ export const CONTENT_PILLARS: ContentPillar[] = [
       "Muestra el producto en cámara al abrirlo y da su opinión real — el formato preferido de las marcas para lanzamientos.",
     keywords: ["unboxing", "reseñas", "producto"],
     embedUrls: ["https://www.tiktok.com/@t0ni_00/video/7637289567766301972"],
+  },
+  {
+    id: "arqui",
+    title: "Vida universitaria — \"Arqui\"",
+    description:
+      "Serie propia sobre su día a día estudiando arquitectura: entregas, trasnoches, maquetas y la cultura de facultad.",
+    keywords: ["universidad", "arquitectura", "estudiantes"],
+    embedUrls: ["https://www.tiktok.com/@t0ni_00/video/7632879811748171029"],
+  },
+  {
+    id: "humor",
+    title: "Humor y sketches cotidianos",
+    description:
+      "Situaciones del día a día llevadas al sketch — el formato que más engagement genera dentro de su comunidad.",
+    keywords: ["humor", "sketches", "comedia"],
+    embedUrls: ["https://www.tiktok.com/@t0ni_00/video/7443879490331118903"],
   },
 ];
 
@@ -267,8 +267,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     id: "shein",
     brandName: "Shein",
-    summary:
-      "Más de 5 videos reseñando productos de la marca, con más de 27K vistas combinadas.",
+    summary: "Más de 5 videos reseñando productos de la marca.",
     campaignType: "Ambassador",
     isExample: false,
   },

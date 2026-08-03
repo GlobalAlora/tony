@@ -34,12 +34,9 @@ export function ContentPillarsSection() {
         </div>
       </div>
 
-      {/* Loaded once for the whole section — one <Script> per embed made
-          embed.js's DOM scans race each other and non-deterministically
-          collapse some players (see SocialEmbed.tsx). */}
-      {platforms.has("tiktok") && (
-        <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
-      )}
+      {/* TikTok renders via a direct iframe now (see SocialEmbed.tsx) — no
+          script needed. Instagram still uses the official blockquote, so
+          its script stays. */}
       {platforms.has("instagram") && (
         <Script src="https://www.instagram.com/embed.js" strategy="lazyOnload" />
       )}
