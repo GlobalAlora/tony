@@ -1,10 +1,16 @@
 import { Button } from "@/components/ui/Button";
-import { MediaPlaceholder } from "@/components/ui/MediaPlaceholder";
+import { HeroCarousel } from "@/components/hero/HeroCarousel";
 import { CREATOR, getSocialProfiles } from "@/lib/constants/creator-data";
 import { SECTION_IDS } from "@/lib/constants/site";
 
+const HERO_IMAGES = Array.from(
+  { length: 11 },
+  (_, i) => `/images/hero/hero-${i + 1}.jpeg`,
+);
+
 export async function Hero() {
   const socialProfiles = await getSocialProfiles();
+  const tiktokProfile = socialProfiles.find((p) => p.platform === "tiktok");
 
   return (
     <section
@@ -59,14 +65,16 @@ export async function Hero() {
                 </dd>
               </div>
             ))}
-            <div>
-              <dt className="text-xs font-medium uppercase tracking-wide text-ink-faint">
-                Likes totales TikTok
-              </dt>
-              <dd className="font-display text-2xl font-bold text-accent">
-                55.2M
-              </dd>
-            </div>
+            {tiktokProfile ? (
+              <div>
+                <dt className="text-xs font-medium uppercase tracking-wide text-ink-faint">
+                  {tiktokProfile.secondaryMetric.label}
+                </dt>
+                <dd className="font-display text-2xl font-bold text-accent">
+                  {tiktokProfile.secondaryMetric.value}
+                </dd>
+              </div>
+            ) : null}
           </dl>
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -79,11 +87,9 @@ export async function Hero() {
           </div>
         </div>
 
-        <MediaPlaceholder
+        <HeroCarousel
+          images={HERO_IMAGES}
           alt={`Foto de ${CREATOR.displayName}`}
-          label="Reemplazar con foto real de Tony (/public/images/hero.jpg)"
-          aspectRatio="4/5"
-          priority
           className="animate-fade-up mx-auto w-full max-w-sm lg:max-w-none"
         />
       </div>
