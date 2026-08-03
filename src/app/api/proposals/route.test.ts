@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 
-const insertMock = vi.fn(async () => ({ error: null as { message: string } | null }));
-const notificationMock = vi.fn(async () => ({ data: { id: "email_1" }, error: null }));
-const autoReplyMock = vi.fn(async () => ({ data: { id: "email_2" }, error: null }));
+const insertMock = vi.fn(async (_row: unknown) => ({ error: null as { message: string } | null }));
+const notificationMock = vi.fn(async (_proposal: unknown) => ({ data: { id: "email_1" }, error: null }));
+const autoReplyMock = vi.fn(async (_proposal: unknown) => ({ data: { id: "email_2" }, error: null }));
 
 vi.mock("@/lib/supabase/server", () => ({
   createSupabaseServerClient: () => ({
@@ -11,8 +11,8 @@ vi.mock("@/lib/supabase/server", () => ({
 }));
 
 vi.mock("@/lib/email/send-proposal-emails", () => ({
-  sendProposalNotification: (...args: unknown[]) => notificationMock(...args),
-  sendProposalAutoReply: (...args: unknown[]) => autoReplyMock(...args),
+  sendProposalNotification: (proposal: unknown) => notificationMock(proposal),
+  sendProposalAutoReply: (proposal: unknown) => autoReplyMock(proposal),
 }));
 
 vi.mock("@/lib/rate-limit", () => ({

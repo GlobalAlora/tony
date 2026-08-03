@@ -12,6 +12,10 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      // Next.js resolves this to a no-op in Server Component bundles via the
+      // "react-server" export condition; mirror that here so server-only
+      // modules (e.g. rate-limit.ts) are importable from plain Vitest tests.
+      "server-only": path.resolve(__dirname, "./node_modules/server-only/empty.js"),
     },
   },
 });

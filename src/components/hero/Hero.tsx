@@ -40,7 +40,14 @@ export function Hero() {
             {SOCIAL_PROFILES.map((profile) => (
               <div key={profile.platform}>
                 <dt className="text-xs font-medium uppercase tracking-wide text-ink-faint">
-                  {profile.label} · {profile.handle}
+                  <a
+                    href={profile.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="focus-ring rounded transition-colors hover:text-accent"
+                  >
+                    {profile.label} · {profile.handle}
+                  </a>
                 </dt>
                 <dd className="font-display text-2xl font-bold text-ink">
                   {profile.followersDisplay}

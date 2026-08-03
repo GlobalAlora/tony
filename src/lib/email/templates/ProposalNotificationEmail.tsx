@@ -7,7 +7,6 @@ import {
   Html,
   Link,
   Preview,
-  Section,
   Text,
 } from "@react-email/components";
 import type { ProposalEmailData } from "@/lib/email/templates/types";

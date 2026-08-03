@@ -18,21 +18,45 @@ const inter = Inter({
   display: "swap",
 });
 
+const TITLE = `${CREATOR.displayName} — Media Kit para Marcas`;
+const DESCRIPTION = `${CREATOR.displayName} es creador de contenido en ${CREATOR.location.city}, ${CREATOR.location.country}: humor, vida universitaria y lifestyle para más de 357K seguidores en TikTok e Instagram. Media kit con métricas, audiencia y formulario de propuestas.`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${CREATOR.displayName} — Media Kit para Marcas`,
+    default: TITLE,
     template: `%s — ${SITE_NAME}`,
   },
-  description: `${CREATOR.displayName} es creador de contenido en ${CREATOR.location.city}, ${CREATOR.location.country}: humor, vida universitaria y lifestyle para más de 357K seguidores en TikTok e Instagram. Media kit con métricas, audiencia y formulario de propuestas.`,
+  description: DESCRIPTION,
   applicationName: SITE_NAME,
   authors: [{ name: CREATOR.fullName }],
   category: "Marketing de influencers",
+  keywords: [
+    "influencer La Plata",
+    "creador de contenido TikTok Argentina",
+    "media kit influencer Argentina",
+    "humor universitario",
+    "lifestyle Argentina",
+    CREATOR.fullName,
+  ],
   alternates: {
     canonical: "/",
   },
   icons: {
     icon: "/favicon.ico",
+  },
+  openGraph: {
+    type: "profile",
+    locale: "es_AR",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: TITLE,
+    description: DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
   },
 };
 

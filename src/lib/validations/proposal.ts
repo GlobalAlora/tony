@@ -45,8 +45,8 @@ export const proposalFormSchema = z.object({
     .max(4000, "Máximo 4000 caracteres.")
     .optional()
     .or(z.literal("")),
-  /** Honeypot — must stay empty. Hidden from real users via CSS. */
-  website: z.string().max(0, "").optional().or(z.literal("")),
+  /** Honeypot — real users leave it empty (hidden via CSS); the route rejects non-empty values. */
+  website: z.string().optional().or(z.literal("")),
   /** Anti-bot timing check — epoch ms captured when the form mounted. */
   renderedAt: z.number().optional(),
 });

@@ -2,8 +2,15 @@ import type { BudgetRange, CampaignType, ProposalPlatform } from "@/lib/constant
 
 export type ProposalStatus = "new" | "in_conversation" | "closed" | "rejected";
 
-/** Mirrors the `public.proposals` table (see supabase/migrations). */
-export interface ProposalRow {
+/**
+ * Mirrors the `public.proposals` table (see supabase/migrations). Declared
+ * as a `type`, not an `interface`: only object-literal type aliases get an
+ * implicit index signature when TS checks them against `Record<string,
+ * unknown>`, which is what `SupabaseClient<Database>` requires internally
+ * (`GenericTable["Row"]`). An interface here silently makes every
+ * `.from("proposals")` call resolve to `never`.
+ */
+export type ProposalRow = {
   id: string;
   brand_name: string;
   contact_name: string;
@@ -18,7 +25,7 @@ export interface ProposalRow {
   internal_notes: string | null;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type ProposalInsert = Pick<
   ProposalRow,

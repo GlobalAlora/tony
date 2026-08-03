@@ -14,7 +14,6 @@ import {
   PLATFORM_LABELS,
   PLATFORM_VALUES,
 } from "@/lib/constants/form-options";
-import { SECTION_IDS } from "@/lib/constants/site";
 import {
   proposalFormSchema,
   type ProposalFormValues,
@@ -25,6 +24,12 @@ type SubmitStatus = "idle" | "submitting" | "success" | "error";
 export function ProposalForm() {
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [serverError, setServerError] = useState<string | null>(null);
+
+  // useState's lazy initializer is the sanctioned place for a one-time
+  // impure read (Date.now()) — it runs exactly once, on mount, unlike a
+  // plain render-time expression. The anti-bot timing check in the API
+  // route depends on this being captured at mount, not on every re-render.
+  const [renderedAt] = useState(() => Date.now());
 
   const {
     register,
@@ -43,7 +48,7 @@ export function ProposalForm() {
       estimated_date: "",
       message: "",
       website: "",
-      renderedAt: Date.now(),
+      renderedAt,
     },
   });
 
