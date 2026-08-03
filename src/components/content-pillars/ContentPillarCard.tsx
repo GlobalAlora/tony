@@ -7,7 +7,13 @@ export function ContentPillarCard({ pillar }: { pillar: ContentPillar }) {
 
   return (
     <article className="flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface-raised">
-      <div className="flex justify-center bg-surface-overlay p-3">
+      {/*
+        No horizontal padding below sm: TikTok's embed has a hardcoded
+        min-width:325px, and on a ~375px phone the padded content area fell
+        just short of that (309px) — with this card's overflow-hidden, the
+        video was silently clipped away instead of shown.
+      */}
+      <div className="flex justify-center overflow-x-auto bg-surface-overlay px-0 py-3 sm:p-3">
         {embedUrl ? (
           <SocialEmbed url={embedUrl} />
         ) : (

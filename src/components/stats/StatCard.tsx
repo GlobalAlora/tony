@@ -12,7 +12,7 @@ export function StatCard({ stat, featured = false }: StatCardProps) {
   return (
     <article
       className={cn(
-        "relative flex min-h-[11rem] flex-col justify-between overflow-hidden rounded-[var(--radius-card)] p-6 transition-transform duration-[var(--duration-normal)] ease-[var(--ease-out-expo)] hover:-translate-y-1",
+        "relative flex min-h-[11rem] flex-col justify-between overflow-hidden rounded-[var(--radius-card)] p-4 transition-transform duration-[var(--duration-normal)] ease-[var(--ease-out-expo)] hover:-translate-y-1 sm:p-6",
         featured
           ? "h-full bg-accent text-accent-ink"
           : "h-full border border-line bg-surface-raised text-ink",
@@ -47,7 +47,14 @@ export function StatCard({ stat, featured = false }: StatCardProps) {
       <div>
         <p
           className={cn(
-            "font-display font-bold leading-none text-[length:var(--text-stat)]",
+            "font-display font-bold leading-none",
+            // Non-featured cards sit two-up on mobile at ~150px wide —
+            // the full --text-stat clamp (36px+) doesn't fit values like
+            // "357.5K" there without cramming/overflowing. Featured stays
+            // full-size since it always spans the full row width.
+            featured
+              ? "text-[length:var(--text-stat)]"
+              : "text-3xl sm:text-[length:var(--text-stat)]",
             stat.isPlaceholder && "text-ink-faint",
           )}
         >
