@@ -2,20 +2,22 @@ import {
   ALL_SOCIAL_URLS,
   CREATOR,
 } from "@/lib/constants/creator-data";
-import { FAQ_ITEMS } from "@/lib/constants/faq";
+import { getFaqItems } from "@/lib/constants/faq";
 import { SITE_URL } from "@/lib/constants/site";
 
 /**
  * Single @graph combining ProfilePage + Person + FAQPage, cross-referenced
- * by @id. Built from the same constants the visible page renders from, so
- * the JSON-LD can never state a fact the HTML doesn't also show — that
- * consistency is what generative engines use as a trust signal.
+ * by @id. Built from the same live-merged data the visible page renders
+ * from (via getFaqItems), so the JSON-LD can never state a stale follower
+ * count the HTML doesn't also show — that consistency is what generative
+ * engines use as a trust signal.
  *
- * No `image` field on Person yet: there's no real photo in /public yet
- * (see MediaPlaceholder usage in Hero), and a placeholder URL would be a
- * false structured-data claim. Add it once a real hero photo exists.
+ * No `image` field on Person: a real hero photo now exists (see
+ * HeroCarousel), but it's a rotating carousel of 11 photos rather than one
+ * canonical portrait, so there's no single correct URL for this field yet.
  */
-export function getHomePageJsonLd() {
+export async function getHomePageJsonLd() {
+  const faqItems = await getFaqItems();
   const personId = `${SITE_URL}/#person`;
   const profilePageId = `${SITE_URL}/#profile`;
   const faqId = `${SITE_URL}/#faq`;
@@ -51,7 +53,7 @@ export function getHomePageJsonLd() {
       {
         "@type": "FAQPage",
         "@id": faqId,
-        mainEntity: FAQ_ITEMS.map((item) => ({
+        mainEntity: faqItems.map((item) => ({
           "@type": "Question",
           name: item.question,
           acceptedAnswer: {

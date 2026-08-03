@@ -1,16 +1,20 @@
-import { CONTENT_PILLARS, CREATOR, SOCIAL_PROFILES, YOUTUBE_CHANNEL } from "@/lib/constants/creator-data";
-import { FAQ_ITEMS } from "@/lib/constants/faq";
+import { CONTENT_PILLARS, CREATOR, YOUTUBE_CHANNEL, getSocialProfiles } from "@/lib/constants/creator-data";
+import { getFaqItems } from "@/lib/constants/faq";
 import { SITE_URL } from "@/lib/constants/site";
 
 export const revalidate = 3600;
 
 /**
  * Emerging convention giving AI crawlers a structured, low-noise summary of
- * the site. Built from the same constants as the visible page and JSON-LD
- * (see lib/constants + lib/seo/schema.ts) so nothing here can drift out of
- * sync with what's actually on the page.
+ * the site. Built from the same live-merged data as the visible page and
+ * JSON-LD (see lib/constants + lib/seo/schema.ts) so nothing here can drift
+ * out of sync with what's actually on the page.
  */
-function buildLlmsTxt(): string {
+async function buildLlmsTxt(): Promise<string> {
+  const [socialProfiles, faqItems] = await Promise.all([
+    getSocialProfiles(),
+    getFaqItems(),
+  ]);
   const lines: string[] = [];
 
   lines.push(`# ${CREATOR.displayName} — Media Kit`);
@@ -20,7 +24,7 @@ function buildLlmsTxt(): string {
 
   lines.push("## Datos clave");
   lines.push(`- Nombre completo: ${CREATOR.fullName}`);
-  for (const profile of SOCIAL_PROFILES) {
+  for (const profile of socialProfiles) {
     lines.push(
       `- ${profile.label}: ${profile.handle} — ${profile.followersDisplay} seguidores, ${profile.secondaryMetric.value} (${profile.secondaryMetric.label.toLowerCase()})`,
     );
@@ -39,7 +43,7 @@ function buildLlmsTxt(): string {
   lines.push("");
 
   lines.push("## Preguntas frecuentes");
-  for (const item of FAQ_ITEMS) {
+  for (const item of faqItems) {
     lines.push(`### ${item.question}`);
     lines.push(item.answer);
     lines.push("");
@@ -53,8 +57,8 @@ function buildLlmsTxt(): string {
   return lines.join("\n");
 }
 
-export function GET() {
-  return new Response(buildLlmsTxt(), {
+export async function GET() {
+  return new Response(await buildLlmsTxt(), {
     headers: {
       "Content-Type": "text/plain; charset=utf-8",
     },

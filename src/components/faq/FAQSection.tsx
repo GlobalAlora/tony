@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { FAQ_ITEMS } from "@/lib/constants/faq";
+import { getFaqItems } from "@/lib/constants/faq";
 import { SECTION_IDS } from "@/lib/constants/site";
 
 /**
@@ -10,7 +10,9 @@ import { SECTION_IDS } from "@/lib/constants/site";
  * engines that don't execute JS or interact with the page (see project
  * GEO/AEO requirements). `dl`/`dt`/`dd` mirrors the FAQPage JSON-LD 1:1.
  */
-export function FAQSection() {
+export async function FAQSection() {
+  const faqItems = await getFaqItems();
+
   return (
     <section
       id={SECTION_IDS.faq}
@@ -25,7 +27,7 @@ export function FAQSection() {
         />
 
         <dl className="mt-10 divide-y divide-line">
-          {FAQ_ITEMS.map((item, i) => (
+          {faqItems.map((item, i) => (
             <Reveal key={item.question} delayMs={Math.min(i * 40, 200)}>
               <div className="py-6">
                 <dt className="font-display text-base font-bold text-ink sm:text-lg">

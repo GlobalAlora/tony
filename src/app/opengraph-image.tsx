@@ -1,20 +1,26 @@
 import { ImageResponse } from "next/og";
-import { CREATOR, SOCIAL_PROFILES } from "@/lib/constants/creator-data";
+import { CREATOR, getSocialProfiles } from "@/lib/constants/creator-data";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const alt = `${CREATOR.displayName} — Media Kit`;
+// Without this, Next.js renders the image once at build time and never
+// again — the exact bug that left this OG image showing stale follower
+// counts after they'd already gone live everywhere else on the site.
+export const revalidate = 3600;
 
 /**
- * Generated instead of a static asset: there's no real hero photo in
- * /public yet (see MediaPlaceholder), and shipping a placeholder photo as
- * the OG image would be a worse first impression than a clean data card.
- * Pulls from the same creator-data constants as the page, so the numbers
- * shown when this gets shared can never drift from what's on the page.
+ * Generated instead of a static asset: 11 real photos exist now (see
+ * HeroCarousel), but a rotating carousel has no single canonical portrait
+ * to use as the OG image, so a data card fits better here anyway. Pulls
+ * from the same live-merged data as the rest of the page (getSocialProfiles),
+ * so the numbers shown when this gets shared can't drift from what's on
+ * the page.
  */
-export default function OpengraphImage() {
-  const tiktok = SOCIAL_PROFILES.find((p) => p.platform === "tiktok")!;
-  const instagram = SOCIAL_PROFILES.find((p) => p.platform === "instagram")!;
+export default async function OpengraphImage() {
+  const socialProfiles = await getSocialProfiles();
+  const tiktok = socialProfiles.find((p) => p.platform === "tiktok")!;
+  const instagram = socialProfiles.find((p) => p.platform === "instagram")!;
 
   return new ImageResponse(
     (

@@ -39,10 +39,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const jsonLd = await getHomePageJsonLd();
+
   return (
     <>
-      <JsonLd data={getHomePageJsonLd()} />
+      <JsonLd data={jsonLd} />
       <Hero />
       <StatsSection />
       <AboutSection />
