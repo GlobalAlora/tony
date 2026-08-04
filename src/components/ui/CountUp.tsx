@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useInViewOnce } from "@/hooks/useInViewOnce";
 
 interface CountUpProps {
@@ -36,7 +36,12 @@ function parseValue(value: string): ParsedValue | null {
  * prefers-reduced-motion, jumping straight to the final value.
  */
 export function CountUp({ value, durationMs = 1400, className }: CountUpProps) {
-  const parsed = parseValue(value);
+  // Memoized on `value`: parseValue returns a fresh object every call, and
+  // without this, the effect below re-ran on every render (its deps array
+  // saw a "new" parsed object each time) — cancelling and restarting the
+  // rAF loop from scratch before it could ever advance past ~0, so the
+  // count-up appeared permanently stuck instead of finishing.
+  const parsed = useMemo(() => parseValue(value), [value]);
   const { ref, isInView } = useInViewOnce<HTMLSpanElement>(0.4);
   const [display, setDisplay] = useState(() => (parsed ? `0${parsed.suffix}` : value));
 
@@ -52,7 +57,11 @@ export function CountUp({ value, durationMs = 1400, className }: CountUpProps) {
     const start = performance.now();
 
     function tick(now: number) {
-      const progress = Math.min((now - start) / durationMs, 1);
+      // Clamp both ends: some environments' requestAnimationFrame
+      // timestamp doesn't reliably correlate with performance.now() (seen
+      // in jsdom, via the regression test) — an unclamped negative
+      // progress sends `eased` to a huge negative number instead of 0.
+      const progress = Math.max(0, Math.min((now - start) / durationMs, 1));
       const eased = 1 - Math.pow(1 - progress, 3);
       const current = parsed!.number * eased;
       setDisplay(`${current.toFixed(parsed!.decimals)}${parsed!.suffix}`);
