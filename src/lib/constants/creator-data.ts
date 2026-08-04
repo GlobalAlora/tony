@@ -301,4 +301,12 @@ export const CASE_STUDIES: CaseStudy[] = [
     campaignType: "Post único",
     isExample: false,
   },
+  {
+    id: "emprendimientos",
+    brandName: "Emprendimientos locales",
+    summary:
+      "Colaboraciones por canje con distintos emprendimientos: recibe el producto a cambio de mostrarlo en su contenido.",
+    campaignType: "Canje",
+    isExample: false,
+  },
 ];

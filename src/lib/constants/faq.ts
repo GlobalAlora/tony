@@ -47,7 +47,7 @@ export async function getFaqItems(): Promise<FaqItem[]> {
     },
     {
       question: `¿Con qué marcas trabajó ${CREATOR.displayName} antes?`,
-      answer: `${CREATOR.displayName} trabajó con marcas como Shein (como ambassador), Adrenaline, Luqstoff, Firmoo y Suprabond, con reseñas de producto y contenido patrocinado. El detalle de cada colaboración está en la sección de casos de este media kit.`,
+      answer: `${CREATOR.displayName} trabajó con marcas como Shein (como ambassador), Adrenaline, Luqstoff, Firmoo y Suprabond, con reseñas de producto y contenido patrocinado, además de colaboraciones por canje con varios emprendimientos locales. El detalle de cada colaboración está en la sección de casos de este media kit.`,
     },
     {
       question: `¿Cómo se contacta a ${CREATOR.displayName} para una propuesta de marca?`,
