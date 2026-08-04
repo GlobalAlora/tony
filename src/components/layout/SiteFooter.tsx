@@ -87,6 +87,19 @@ export function SiteFooter() {
             a TikTok, Instagram ni YouTube.
           </p>
         </div>
+
+        <p className="mt-4 text-center text-xs text-ink-faint">
+          Desarrollado por{" "}
+          <a
+            href="https://globalalora.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="focus-ring rounded font-medium text-ink-muted transition-colors hover:text-accent"
+          >
+            Global Alora
+          </a>{" "}
+          💚
+        </p>
       </div>
     </footer>
   );
