@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/Button";
+import { CountUp } from "@/components/ui/CountUp";
 import { HeroCarousel } from "@/components/hero/HeroCarousel";
 import { CREATOR, getSocialProfiles } from "@/lib/constants/creator-data";
 import { SECTION_IDS } from "@/lib/constants/site";
@@ -20,7 +21,7 @@ export async function Hero() {
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-40 left-1/2 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,var(--color-accent)_0%,transparent_65%)] opacity-[0.14] blur-3xl"
+        className="decorative-blob pointer-events-none absolute -top-40 left-1/2 h-[36rem] w-[36rem] rounded-full bg-[radial-gradient(circle,var(--color-accent)_0%,transparent_65%)] opacity-[0.14] blur-3xl"
       />
 
       <div className="relative mx-auto grid max-w-6xl gap-12 px-[var(--spacing-gutter)] lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-8">
@@ -58,7 +59,7 @@ export async function Hero() {
                   </a>
                 </dt>
                 <dd className="font-display text-2xl font-bold text-ink">
-                  {profile.followersDisplay}
+                  <CountUp value={profile.followersDisplay} />
                   <span className="ml-1 text-xs font-medium text-ink-muted">
                     seguidores
                   </span>
@@ -71,7 +72,7 @@ export async function Hero() {
                   {tiktokProfile.secondaryMetric.label}
                 </dt>
                 <dd className="font-display text-2xl font-bold text-accent">
-                  {tiktokProfile.secondaryMetric.value}
+                  <CountUp value={tiktokProfile.secondaryMetric.value} />
                 </dd>
               </div>
             ) : null}

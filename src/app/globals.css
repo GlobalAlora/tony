@@ -125,7 +125,7 @@ body {
 @keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(28px) scale(0.97);
   }
   to {
     opacity: 1;
@@ -135,6 +135,28 @@ body {
 
 .animate-fade-up {
   animation: fade-up var(--duration-slow) var(--ease-out-expo) both;
+}
+
+/* Slow, subtle drift for the decorative background blobs (hero, proposal
+   form). The base transform includes translate(-50%, 0) so it fully owns
+   centering — don't pair this with a Tailwind -translate-x-1/2 utility on
+   the same element, the animation's transform would just overwrite it. */
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translate(-50%, 0) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -22px) scale(1.06);
+  }
+}
+
+.decorative-blob {
+  animation: float-slow 16s var(--ease-out-expo) infinite;
+}
+
+.decorative-blob--delay {
+  animation-delay: -8s;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,3 +1,4 @@
+import { CountUp } from "@/components/ui/CountUp";
 import { cn } from "@/lib/utils";
 import type { HeadlineStat } from "@/lib/constants/creator-data";
 
@@ -58,7 +59,7 @@ export function StatCard({ stat, featured = false }: StatCardProps) {
             stat.isPlaceholder && "text-ink-faint",
           )}
         >
-          {stat.value}
+          <CountUp value={stat.value} />
         </p>
         <p
           className={cn(

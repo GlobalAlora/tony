@@ -7,10 +7,10 @@ type ButtonSize = "md" | "lg";
 
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   primary:
-    "bg-accent text-accent-ink hover:bg-ink hover:text-surface shadow-[0_0_0_1px_rgba(0,0,0,0.05)]",
+    "bg-accent text-accent-ink shadow-[0_0_0_1px_rgba(0,0,0,0.05)] hover:bg-ink hover:text-surface hover:shadow-[0_8px_24px_-8px_var(--color-accent)]",
   secondary:
-    "border border-line-strong text-ink hover:border-accent hover:text-accent bg-transparent",
-  ghost: "text-ink-muted hover:text-ink bg-transparent",
+    "border border-line-strong text-ink bg-transparent hover:border-accent hover:text-accent hover:shadow-[0_8px_20px_-10px_var(--color-accent)]",
+  ghost: "text-ink-muted bg-transparent hover:text-ink",
 };
 
 const SIZE_CLASSES: Record<ButtonSize, string> = {
@@ -19,7 +19,7 @@ const SIZE_CLASSES: Record<ButtonSize, string> = {
 };
 
 const BASE_CLASSES =
-  "focus-ring inline-flex items-center justify-center gap-2 rounded-full font-semibold tracking-tight transition-all duration-[var(--duration-fast)] ease-[var(--ease-out-expo)] active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50";
+  "focus-ring inline-flex items-center justify-center gap-2 rounded-full font-semibold tracking-tight transition-all duration-[var(--duration-fast)] ease-[var(--ease-out-expo)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:scale-100 disabled:hover:shadow-none";
 
 interface CommonProps {
   variant?: ButtonVariant;
