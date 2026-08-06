@@ -25,10 +25,28 @@ function flattenIssues(error: z.ZodError): Record<string, string> {
   return fieldErrors;
 }
 
+/** Strips a leading "www." so the apex and www variant of the same domain compare equal. */
+function stripWww(hostname: string): string {
+  return hostname.replace(/^www\./, "");
+}
+
 function isSameOrigin(request: Request): boolean {
   const origin = request.headers.get("origin");
   if (!origin) return true; // absent on some legitimate same-origin requests — don't false-positive block
-  return origin === SITE_URL || origin === new URL(SITE_URL).origin;
+
+  try {
+    const originUrl = new URL(origin);
+    const siteUrl = new URL(SITE_URL);
+    // Vercel domain setup commonly redirects apex <-> www, and Next.js's
+    // NEXT_PUBLIC_SITE_URL only ever names one of them — a real browser
+    // request can legitimately arrive with either, so both must match.
+    return (
+      originUrl.protocol === siteUrl.protocol &&
+      stripWww(originUrl.hostname) === stripWww(siteUrl.hostname)
+    );
+  } catch {
+    return false;
+  }
 }
 
 function getClientIp(request: Request): string {

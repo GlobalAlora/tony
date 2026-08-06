@@ -133,4 +133,15 @@ describe("POST /api/proposals", () => {
     );
     expect(res.status).toBe(200);
   });
+
+  test("allows a request from the www variant of the site's origin", async () => {
+    // Regression: Vercel's apex<->www domain redirect means a real browser
+    // request can legitimately arrive with either host, but
+    // NEXT_PUBLIC_SITE_URL only ever names one — this locked out real
+    // submissions with "Origen no permitido" once the www redirect went live.
+    const res = await POST(
+      buildRequest(validBody(), { Origin: "https://www.tonypiorno.com" }),
+    );
+    expect(res.status).toBe(200);
+  });
 });
