@@ -40,6 +40,11 @@ export function SocialEmbed({ url }: SocialEmbedProps) {
         allow="encrypted-media;"
         allowFullScreen
         scrolling="no"
+        // Defers loading until the iframe nears the viewport, instead of
+        // firing all 4 pillar videos' requests at TikTok's embed server at
+        // once on page load — the likely trigger for TikTok's own
+        // "overload-protect triggered" response showing up intermittently.
+        loading="lazy"
         style={{ width: "100%", maxWidth: 325, height: 740, border: "none" }}
       />
     );
