@@ -24,6 +24,12 @@ export function getResendClient(): Resend {
 export const RESEND_FROM =
   process.env.RESEND_FROM_EMAIL ?? "Tony Piorno <onboarding@resend.dev>";
 
-/** Where new-proposal notifications are delivered. Defaults to Tony's inbox. */
+/** Tony's inbox — used as the reply-to on the brand auto-reply. */
 export const NOTIFICATION_RECIPIENT =
   process.env.CREATOR_NOTIFICATION_EMAIL ?? "piornotony@gmail.com";
+
+/** Everyone who should receive new-proposal notifications: Tony plus Bruno. */
+export const NOTIFICATION_RECIPIENTS = [
+  NOTIFICATION_RECIPIENT,
+  "brunopiornop@gmail.com",
+];

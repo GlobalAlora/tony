@@ -2,6 +2,7 @@ import "server-only";
 import {
   getResendClient,
   NOTIFICATION_RECIPIENT,
+  NOTIFICATION_RECIPIENTS,
   RESEND_FROM,
 } from "@/lib/email/resend-client";
 import { ProposalAutoReplyEmail } from "@/lib/email/templates/ProposalAutoReplyEmail";
@@ -60,7 +61,7 @@ export async function sendProposalNotification(proposal: RawProposal) {
 
   return resend.emails.send({
     from: RESEND_FROM,
-    to: NOTIFICATION_RECIPIENT,
+    to: NOTIFICATION_RECIPIENTS,
     replyTo: proposal.contact_email,
     subject: `Nueva propuesta: ${proposal.brand_name}`,
     react: ProposalNotificationEmail(data),
