@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "tony-media-kit",
-      "runtimeExecutable": "pnpm",
+      "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3000
     }

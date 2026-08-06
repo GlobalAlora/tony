@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Unbounded } from "next/font/google";
+import Script from "next/script";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SITE_NAME, SITE_URL } from "@/lib/constants/site";
@@ -76,6 +77,18 @@ export default function RootLayout({
       className={`${unbounded.variable} ${inter.variable} scroll-smooth`}
     >
       <body className="relative flex min-h-screen flex-col bg-surface text-ink antialiased">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-0HRZ8HXEXF"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-0HRZ8HXEXF');
+          `}
+        </Script>
         <div className="grain-overlay" aria-hidden="true" />
         <SiteHeader />
         <main className="relative z-0 flex-1">{children}</main>
