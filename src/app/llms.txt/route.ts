@@ -1,4 +1,4 @@
-import { CONTENT_PILLARS, CREATOR, YOUTUBE_CHANNEL, getSocialProfiles } from "@/lib/constants/creator-data";
+import { CONTENT_PILLARS, CREATOR, SECONDARY_CHANNELS, getSocialProfiles } from "@/lib/constants/creator-data";
 import { getFaqItems } from "@/lib/constants/faq";
 import { SITE_URL } from "@/lib/constants/site";
 
@@ -29,7 +29,9 @@ async function buildLlmsTxt(): Promise<string> {
       `- ${profile.label}: ${profile.handle} — ${profile.followersDisplay} seguidores, ${profile.secondaryMetric.value} (${profile.secondaryMetric.label.toLowerCase()})`,
     );
   }
-  lines.push(`- ${YOUTUBE_CHANNEL.label}: ${YOUTUBE_CHANNEL.handle} (${YOUTUBE_CHANNEL.url})`);
+  for (const channel of SECONDARY_CHANNELS) {
+    lines.push(`- ${channel.label}: ${channel.handle} (${channel.url})`);
+  }
   lines.push(
     `- Ubicación: ${CREATOR.location.city}, ${CREATOR.location.province}, ${CREATOR.location.country}`,
   );

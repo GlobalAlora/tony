@@ -3,17 +3,19 @@ import {
   TikTokIcon,
   InstagramIcon,
   YouTubeIcon,
+  FacebookIcon,
 } from "@/components/ui/icons";
 import {
   CREATOR,
   SOCIAL_PROFILES,
-  YOUTUBE_CHANNEL,
+  SECONDARY_CHANNELS,
 } from "@/lib/constants/creator-data";
 
 const PLATFORM_ICONS = {
   tiktok: TikTokIcon,
   instagram: InstagramIcon,
   youtube: YouTubeIcon,
+  facebook: FacebookIcon,
 } as const;
 
 export function SiteFooter() {
@@ -61,17 +63,22 @@ export function SiteFooter() {
                   </li>
                 );
               })}
-              <li>
-                <a
-                  href={YOUTUBE_CHANNEL.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="focus-ring inline-flex items-center gap-2 rounded-full text-sm font-medium text-ink-muted transition-colors hover:text-accent"
-                >
-                  <YouTubeIcon className="h-4 w-4" />
-                  {YOUTUBE_CHANNEL.label} {YOUTUBE_CHANNEL.handle}
-                </a>
-              </li>
+              {SECONDARY_CHANNELS.map((channel) => {
+                const Icon = PLATFORM_ICONS[channel.platform];
+                return (
+                  <li key={channel.platform}>
+                    <a
+                      href={channel.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="focus-ring inline-flex items-center gap-2 rounded-full text-sm font-medium text-ink-muted transition-colors hover:text-accent"
+                    >
+                      <Icon className="h-4 w-4" />
+                      {channel.label} {channel.handle}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
         </div>
@@ -84,7 +91,7 @@ export function SiteFooter() {
             Los datos enviados por el formulario de propuestas se usan
             exclusivamente para evaluar colaboraciones comerciales y no se
             comparten con terceros. Este sitio no está afiliado oficialmente
-            a TikTok, Instagram ni YouTube.
+            a TikTok, Instagram, YouTube ni Facebook.
           </p>
         </div>
 

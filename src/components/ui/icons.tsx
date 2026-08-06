@@ -35,6 +35,14 @@ export function YouTubeIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function FacebookIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
+      <path d="M13.5 21v-7.6h2.55l.38-2.96h-2.93V8.56c0-.86.24-1.44 1.47-1.44h1.57V4.47C16.24 4.41 15.4 4.35 14.42 4.35c-2.05 0-3.45 1.25-3.45 3.55v1.54H8.4v2.96h2.57V21h2.53Z" />
+    </svg>
+  );
+}
+
 export function MailIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg

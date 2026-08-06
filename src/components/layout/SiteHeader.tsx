@@ -1,10 +1,15 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { TikTokIcon, InstagramIcon, YouTubeIcon } from "@/components/ui/icons";
+import {
+  TikTokIcon,
+  InstagramIcon,
+  YouTubeIcon,
+  FacebookIcon,
+} from "@/components/ui/icons";
 import {
   CREATOR,
   SOCIAL_PROFILES,
-  YOUTUBE_CHANNEL,
+  SECONDARY_CHANNELS,
 } from "@/lib/constants/creator-data";
 import { SECTION_IDS } from "@/lib/constants/site";
 
@@ -12,6 +17,7 @@ const PLATFORM_ICONS = {
   tiktok: TikTokIcon,
   instagram: InstagramIcon,
   youtube: YouTubeIcon,
+  facebook: FacebookIcon,
 } as const;
 
 export function SiteHeader() {
@@ -49,15 +55,21 @@ export function SiteHeader() {
                 </a>
               );
             })}
-            <a
-              href={YOUTUBE_CHANNEL.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${YOUTUBE_CHANNEL.label} de ${CREATOR.displayName} (se abre en una pestaña nueva)`}
-              className="focus-ring rounded-full text-ink-muted transition-colors hover:text-accent"
-            >
-              <YouTubeIcon className="h-5 w-5" />
-            </a>
+            {SECONDARY_CHANNELS.map((channel) => {
+              const Icon = PLATFORM_ICONS[channel.platform];
+              return (
+                <a
+                  key={channel.platform}
+                  href={channel.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${channel.label} de ${CREATOR.displayName} (se abre en una pestaña nueva)`}
+                  className="focus-ring rounded-full text-ink-muted transition-colors hover:text-accent"
+                >
+                  <Icon className="h-5 w-5" />
+                </a>
+              );
+            })}
           </nav>
 
           <Button href={`#${SECTION_IDS.proposalForm}`} size="md">

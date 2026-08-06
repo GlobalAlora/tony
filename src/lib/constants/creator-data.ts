@@ -35,7 +35,7 @@ export const CREATOR = {
   ],
 } as const;
 
-export type SocialPlatform = "tiktok" | "instagram" | "youtube";
+export type SocialPlatform = "tiktok" | "instagram" | "youtube" | "facebook";
 
 export interface SocialProfile {
   platform: SocialPlatform;
@@ -79,9 +79,20 @@ export const YOUTUBE_CHANNEL = {
   url: "https://youtube.com/@tonypiorno",
 };
 
+/** Secondary channel — no public follower count supplied yet. */
+export const FACEBOOK_PAGE = {
+  platform: "facebook" as const,
+  label: "Facebook",
+  handle: "Tony Piorno",
+  url: "https://www.facebook.com/profile.php?id=61589194454591",
+};
+
+/** Link-only channels: shown in nav/footer, no dedicated Hero stat block (see SOCIAL_PROFILES for those). */
+export const SECONDARY_CHANNELS = [YOUTUBE_CHANNEL, FACEBOOK_PAGE];
+
 export const ALL_SOCIAL_URLS = [
   ...SOCIAL_PROFILES.map((p) => p.url),
-  YOUTUBE_CHANNEL.url,
+  ...SECONDARY_CHANNELS.map((c) => c.url),
 ];
 
 /**
