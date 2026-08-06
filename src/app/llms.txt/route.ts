@@ -1,4 +1,10 @@
-import { CONTENT_PILLARS, CREATOR, SECONDARY_CHANNELS, getSocialProfiles } from "@/lib/constants/creator-data";
+import {
+  CONTENT_PILLARS,
+  CREATOR,
+  SECONDARY_CHANNELS,
+  getSocialProfiles,
+  getTagline,
+} from "@/lib/constants/creator-data";
 import { getFaqItems } from "@/lib/constants/faq";
 import { SITE_URL } from "@/lib/constants/site";
 
@@ -11,15 +17,16 @@ export const revalidate = 3600;
  * out of sync with what's actually on the page.
  */
 async function buildLlmsTxt(): Promise<string> {
-  const [socialProfiles, faqItems] = await Promise.all([
+  const [socialProfiles, faqItems, tagline] = await Promise.all([
     getSocialProfiles(),
     getFaqItems(),
+    getTagline(),
   ]);
   const lines: string[] = [];
 
   lines.push(`# ${CREATOR.displayName} — Media Kit`);
   lines.push("");
-  lines.push(`> ${CREATOR.tagline}`);
+  lines.push(`> ${tagline}`);
   lines.push("");
 
   lines.push("## Datos clave");
@@ -30,7 +37,9 @@ async function buildLlmsTxt(): Promise<string> {
     );
   }
   for (const channel of SECONDARY_CHANNELS) {
-    lines.push(`- ${channel.label}: ${channel.handle} (${channel.url})`);
+    lines.push(
+      `- ${channel.label}: ${channel.handle} (${channel.url}) — ~${channel.followersApprox.toLocaleString("es-AR")} seguidores (aproximado)`,
+    );
   }
   lines.push(
     `- Ubicación: ${CREATOR.location.city}, ${CREATOR.location.province}, ${CREATOR.location.country}`,

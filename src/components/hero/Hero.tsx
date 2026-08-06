@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/Button";
 import { CountUp } from "@/components/ui/CountUp";
 import { HeroCarousel } from "@/components/hero/HeroCarousel";
-import { CREATOR, getSocialProfiles } from "@/lib/constants/creator-data";
+import {
+  CREATOR,
+  getSocialProfiles,
+  getTotalFollowersDisplay,
+} from "@/lib/constants/creator-data";
 import { SECTION_IDS } from "@/lib/constants/site";
 
 const HERO_IMAGES = Array.from(
@@ -10,7 +14,10 @@ const HERO_IMAGES = Array.from(
 );
 
 export async function Hero() {
-  const socialProfiles = await getSocialProfiles();
+  const [socialProfiles, totalFollowers] = await Promise.all([
+    getSocialProfiles(),
+    getTotalFollowersDisplay(),
+  ]);
   const tiktokProfile = socialProfiles.find((p) => p.platform === "tiktok");
 
   return (
@@ -41,8 +48,8 @@ export async function Hero() {
           <p className="mt-6 max-w-xl text-[length:var(--text-lead)] leading-relaxed text-ink-muted text-pretty">
             Creador de contenido en {CREATOR.location.city},{" "}
             {CREATOR.location.province}. Humor cotidiano, vida universitaria
-            y lifestyle para más de 357K seguidores entre TikTok e
-            Instagram.
+            y lifestyle para más de {totalFollowers} seguidores en redes
+            sociales.
           </p>
 
           <dl className="mt-8 flex flex-wrap gap-x-8 gap-y-4">

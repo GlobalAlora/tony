@@ -8,7 +8,7 @@ import { Hero } from "@/components/hero/Hero";
 import { ProposalFormSection } from "@/components/proposal-form/ProposalFormSection";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { StatsSection } from "@/components/stats/StatsSection";
-import { CREATOR } from "@/lib/constants/creator-data";
+import { CREATOR, getTagline } from "@/lib/constants/creator-data";
 import { getHomePageJsonLd } from "@/lib/seo/schema";
 
 const KEYWORDS = [
@@ -21,23 +21,27 @@ const KEYWORDS = [
   "colaboraciones con marcas Argentina",
 ];
 
-export const metadata: Metadata = {
-  title: `${CREATOR.displayName} — Influencer y Creador de Contenido en La Plata, Argentina`,
-  description: `Media kit oficial de ${CREATOR.displayName}: métricas de audiencia, pilares de contenido (humor, vida universitaria, lifestyle) y formulario de propuestas para marcas.`,
-  keywords: KEYWORDS,
-  openGraph: {
-    type: "profile",
-    locale: "es_AR",
-    title: `${CREATOR.displayName} — Media Kit para Marcas`,
-    description: CREATOR.tagline,
-    siteName: `${CREATOR.displayName} — Media Kit`,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${CREATOR.displayName} — Media Kit para Marcas`,
-    description: CREATOR.tagline,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const tagline = await getTagline();
+
+  return {
+    title: `${CREATOR.displayName} — Influencer y Creador de Contenido en La Plata, Argentina`,
+    description: `Media kit oficial de ${CREATOR.displayName}: métricas de audiencia, pilares de contenido (humor, vida universitaria, lifestyle) y formulario de propuestas para marcas.`,
+    keywords: KEYWORDS,
+    openGraph: {
+      type: "profile",
+      locale: "es_AR",
+      title: `${CREATOR.displayName} — Media Kit para Marcas`,
+      description: tagline,
+      siteName: `${CREATOR.displayName} — Media Kit`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${CREATOR.displayName} — Media Kit para Marcas`,
+      description: tagline,
+    },
+  };
+}
 
 export default async function HomePage() {
   const jsonLd = await getHomePageJsonLd();

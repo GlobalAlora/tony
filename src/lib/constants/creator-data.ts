@@ -28,7 +28,6 @@ export const CREATOR = {
     countryCode: "AR",
   },
   email: "piornotony@gmail.com",
-  tagline: "Humor, vida universitaria y lifestyle para 357K+ personas.",
   bio: [
     "Tony Piorno es creador de contenido en La Plata, Buenos Aires. Estudia arquitectura y combina el humor cotidiano con su vida universitaria en la serie \"Arqui\", además de contenido de lifestyle, haul y unboxing.",
     "Su tono es cercano, espontáneo y humorístico — el tipo de contenido que se comparte porque se siente real, no producido. Esa cercanía es lo que sostiene el engagement con su comunidad.",
@@ -71,20 +70,27 @@ export const SOCIAL_PROFILES: SocialProfile[] = [
   },
 ];
 
-/** Secondary channel — no public follower count supplied yet. */
+/**
+ * Secondary channel — no live API integration (unlike TikTok/Instagram), so
+ * followersApprox is a manually-supplied round number, not a live count.
+ * Included in getTotalFollowersDisplay() but never shown as its own
+ * headline stat, since it isn't precise enough for that.
+ */
 export const YOUTUBE_CHANNEL = {
   platform: "youtube" as const,
   label: "YouTube",
   handle: "@tonypiorno",
   url: "https://youtube.com/@tonypiorno",
+  followersApprox: 2_500,
 };
 
-/** Secondary channel — no public follower count supplied yet. */
+/** Same caveat as YOUTUBE_CHANNEL: manually-supplied approximate count, not live. */
 export const FACEBOOK_PAGE = {
   platform: "facebook" as const,
   label: "Facebook",
   handle: "Tony Piorno",
   url: "https://www.facebook.com/profile.php?id=61589194454591",
+  followersApprox: 100,
 };
 
 /** Link-only channels: shown in nav/footer, no dedicated Hero stat block (see SOCIAL_PROFILES for those). */
@@ -190,6 +196,26 @@ export async function getHeadlineStats(): Promise<HeadlineStat[]> {
     }
     return stat;
   });
+}
+
+/**
+ * Combined reach across every platform: TikTok + Instagram (live) plus
+ * YouTube + Facebook (manually-supplied approximate counts — see
+ * YOUTUBE_CHANNEL / FACEBOOK_PAGE). Used anywhere the site claims a single
+ * total follower figure, so that number can't drift from the per-platform
+ * ones shown elsewhere on the page.
+ */
+export async function getTotalFollowersDisplay(): Promise<string> {
+  const socialProfiles = await getSocialProfiles();
+  const liveTotal = socialProfiles.reduce((sum, p) => sum + p.followers, 0);
+  const total =
+    liveTotal + YOUTUBE_CHANNEL.followersApprox + FACEBOOK_PAGE.followersApprox;
+  return `${formatCompactCount(total)}+`;
+}
+
+export async function getTagline(): Promise<string> {
+  const total = await getTotalFollowersDisplay();
+  return `Humor, vida universitaria y lifestyle para ${total} personas.`;
 }
 
 export interface ContentPillar {

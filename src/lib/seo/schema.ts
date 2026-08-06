@@ -1,6 +1,7 @@
 import {
   ALL_SOCIAL_URLS,
   CREATOR,
+  getTagline,
 } from "@/lib/constants/creator-data";
 import { getFaqItems } from "@/lib/constants/faq";
 import { SITE_URL } from "@/lib/constants/site";
@@ -17,7 +18,7 @@ import { SITE_URL } from "@/lib/constants/site";
  * canonical portrait, so there's no single correct URL for this field yet.
  */
 export async function getHomePageJsonLd() {
-  const faqItems = await getFaqItems();
+  const [faqItems, tagline] = await Promise.all([getFaqItems(), getTagline()]);
   const personId = `${SITE_URL}/#person`;
   const profilePageId = `${SITE_URL}/#profile`;
   const faqId = `${SITE_URL}/#faq`;
@@ -40,7 +41,7 @@ export async function getHomePageJsonLd() {
         alternateName: CREATOR.displayName,
         url: SITE_URL,
         jobTitle: "Creador de contenido",
-        description: CREATOR.tagline,
+        description: tagline,
         address: {
           "@type": "PostalAddress",
           addressLocality: CREATOR.location.city,

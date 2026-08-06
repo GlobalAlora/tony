@@ -4,7 +4,7 @@ import Script from "next/script";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SITE_NAME, SITE_URL } from "@/lib/constants/site";
-import { CREATOR } from "@/lib/constants/creator-data";
+import { CREATOR, getTotalFollowersDisplay } from "@/lib/constants/creator-data";
 import "./globals.css";
 
 const unbounded = Unbounded({
@@ -20,43 +20,47 @@ const inter = Inter({
 });
 
 const TITLE = `${CREATOR.displayName} — Media Kit para Marcas`;
-const DESCRIPTION = `${CREATOR.displayName} es creador de contenido en ${CREATOR.location.city}, ${CREATOR.location.country}: humor, vida universitaria y lifestyle para más de 357K seguidores en TikTok e Instagram. Media kit con métricas, audiencia y formulario de propuestas.`;
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: {
-    default: TITLE,
-    template: `%s — ${SITE_NAME}`,
-  },
-  description: DESCRIPTION,
-  applicationName: SITE_NAME,
-  authors: [{ name: CREATOR.fullName }],
-  category: "Marketing de influencers",
-  keywords: [
-    "influencer La Plata",
-    "creador de contenido TikTok Argentina",
-    "media kit influencer Argentina",
-    "humor universitario",
-    "lifestyle Argentina",
-    CREATOR.fullName,
-  ],
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    type: "profile",
-    locale: "es_AR",
-    url: SITE_URL,
-    siteName: SITE_NAME,
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const totalFollowers = await getTotalFollowersDisplay();
+  const description = `${CREATOR.displayName} es creador de contenido en ${CREATOR.location.city}, ${CREATOR.location.country}: humor, vida universitaria y lifestyle para más de ${totalFollowers} seguidores en redes sociales. Media kit con métricas, audiencia y formulario de propuestas.`;
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: {
+      default: TITLE,
+      template: `%s — ${SITE_NAME}`,
+    },
+    description,
+    applicationName: SITE_NAME,
+    authors: [{ name: CREATOR.fullName }],
+    category: "Marketing de influencers",
+    keywords: [
+      "influencer La Plata",
+      "creador de contenido TikTok Argentina",
+      "media kit influencer Argentina",
+      "humor universitario",
+      "lifestyle Argentina",
+      CREATOR.fullName,
+    ],
+    alternates: {
+      canonical: "/",
+    },
+    openGraph: {
+      type: "profile",
+      locale: "es_AR",
+      url: SITE_URL,
+      siteName: SITE_NAME,
+      title: TITLE,
+      description,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: TITLE,
+      description,
+    },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#0d0d0e",
