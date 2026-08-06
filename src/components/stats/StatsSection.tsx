@@ -23,7 +23,13 @@ export async function StatsSection() {
 
         <div className="mt-10 grid grid-cols-2 gap-4">
           {headlineStats.map((stat, i) => (
-            <Reveal key={stat.id} delayMs={i * 60} className={i === 0 ? "col-span-2" : undefined}>
+            <Reveal
+              key={stat.id}
+              delayMs={i * 60}
+              className={
+                i === 0 || i === headlineStats.length - 1 ? "col-span-2" : undefined
+              }
+            >
               <StatCard stat={stat} featured={i === 0} />
             </Reveal>
           ))}
