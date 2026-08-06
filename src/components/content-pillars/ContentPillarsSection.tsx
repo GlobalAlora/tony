@@ -1,6 +1,6 @@
 import Script from "next/script";
 import { ContentPillarCard } from "@/components/content-pillars/ContentPillarCard";
-import { detectPlatform } from "@/components/content-pillars/SocialEmbed";
+import { detectPlatform } from "@/components/content-pillars/detectPlatform";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CONTENT_PILLARS } from "@/lib/constants/creator-data";
@@ -28,7 +28,7 @@ export function ContentPillarsSection() {
         <div className="mt-10 grid gap-6 sm:grid-cols-2">
           {CONTENT_PILLARS.map((pillar, i) => (
             <Reveal key={pillar.id} delayMs={i * 60}>
-              <ContentPillarCard pillar={pillar} />
+              <ContentPillarCard pillar={pillar} embedDelayMs={i * 1000} />
             </Reveal>
           ))}
         </div>

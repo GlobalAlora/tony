@@ -1,11 +1,21 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useInViewOnce } from "@/hooks/useInViewOnce";
+import { detectPlatform } from "@/components/content-pillars/detectPlatform";
+
 interface SocialEmbedProps {
   url: string;
-}
-
-export function detectPlatform(url: string): "tiktok" | "instagram" | null {
-  if (/tiktok\.com/.test(url)) return "tiktok";
-  if (/instagram\.com/.test(url)) return "instagram";
-  return null;
+  /**
+   * Stagger before mounting the iframe once it scrolls into view. Browser-
+   * native `loading="lazy"` wasn't enough on its own: cards in the same or
+   * adjacent grid rows can all enter the viewport within the same instant,
+   * still firing several requests at TikTok's embed server at once — the
+   * kind of burst its own "overload-protect" response is built to catch.
+   * An explicit per-card delay guarantees real time between requests
+   * regardless of how close together the cards are on screen.
+   */
+  delayMs?: number;
 }
 
 function extractTikTokVideoId(url: string): string | null {
@@ -26,27 +36,34 @@ function extractTikTokVideoId(url: string): string | null {
  * to work. A fixed height sidesteps that race entirely, at the cost of
  * some unused whitespace for videos with a short caption.
  */
-export function SocialEmbed({ url }: SocialEmbedProps) {
+export function SocialEmbed({ url, delayMs = 0 }: SocialEmbedProps) {
   const platform = detectPlatform(url);
+  const { ref, isInView } = useInViewOnce<HTMLDivElement>(0.1);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    if (!isInView) return;
+    const timer = setTimeout(() => setReady(true), delayMs);
+    return () => clearTimeout(timer);
+  }, [isInView, delayMs]);
 
   if (platform === "tiktok") {
     const videoId = extractTikTokVideoId(url);
     if (!videoId) return null;
 
     return (
-      <iframe
-        src={`https://www.tiktok.com/embed/v2/${videoId}?lang=es`}
-        title="TikTok video"
-        allow="encrypted-media;"
-        allowFullScreen
-        scrolling="no"
-        // Defers loading until the iframe nears the viewport, instead of
-        // firing all 4 pillar videos' requests at TikTok's embed server at
-        // once on page load — the likely trigger for TikTok's own
-        // "overload-protect triggered" response showing up intermittently.
-        loading="lazy"
-        style={{ width: "100%", maxWidth: 325, height: 740, border: "none" }}
-      />
+      <div ref={ref} style={{ width: "100%", maxWidth: 325, height: 740 }}>
+        {ready ? (
+          <iframe
+            src={`https://www.tiktok.com/embed/v2/${videoId}?lang=es`}
+            title="TikTok video"
+            allow="encrypted-media;"
+            allowFullScreen
+            scrolling="no"
+            style={{ width: "100%", height: "100%", border: "none" }}
+          />
+        ) : null}
+      </div>
     );
   }
 

@@ -2,7 +2,13 @@ import { MediaPlaceholder } from "@/components/ui/MediaPlaceholder";
 import { SocialEmbed } from "@/components/content-pillars/SocialEmbed";
 import type { ContentPillar } from "@/lib/constants/creator-data";
 
-export function ContentPillarCard({ pillar }: { pillar: ContentPillar }) {
+interface ContentPillarCardProps {
+  pillar: ContentPillar;
+  /** Passed through to SocialEmbed so multiple cards' videos don't all request TikTok at once. */
+  embedDelayMs?: number;
+}
+
+export function ContentPillarCard({ pillar, embedDelayMs }: ContentPillarCardProps) {
   const embedUrl = pillar.embedUrls?.[0];
 
   return (
@@ -15,7 +21,7 @@ export function ContentPillarCard({ pillar }: { pillar: ContentPillar }) {
       */}
       <div className="flex justify-center overflow-x-auto bg-surface-overlay px-0 py-3 sm:p-3">
         {embedUrl ? (
-          <SocialEmbed url={embedUrl} />
+          <SocialEmbed url={embedUrl} delayMs={embedDelayMs} />
         ) : (
           <MediaPlaceholder
             alt={`Video de ejemplo — ${pillar.title}`}
