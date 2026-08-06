@@ -28,7 +28,7 @@ export function ContentPillarsSection() {
         <div className="mt-10 grid gap-6 sm:grid-cols-2">
           {CONTENT_PILLARS.map((pillar, i) => (
             <Reveal key={pillar.id} delayMs={i * 60}>
-              <ContentPillarCard pillar={pillar} embedDelayMs={i * 1000} />
+              <ContentPillarCard pillar={pillar} />
             </Reveal>
           ))}
         </div>

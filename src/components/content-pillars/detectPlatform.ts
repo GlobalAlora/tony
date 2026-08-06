@@ -10,3 +10,7 @@ export function detectPlatform(url: string): "tiktok" | "instagram" | null {
   if (/instagram\.com/.test(url)) return "instagram";
   return null;
 }
+
+export function extractTikTokVideoId(url: string): string | null {
+  return url.match(/\/video\/(\d+)/)?.[1] ?? null;
+}
