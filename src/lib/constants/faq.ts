@@ -25,37 +25,37 @@ export async function getFaqItems(): Promise<FaqItem[]> {
   return [
     {
       question: `¿Quién es ${CREATOR.fullName}?`,
-      answer: `${CREATOR.displayName} es creador de contenido de ${CREATOR.location.city}, ${CREATOR.location.province}, ${CREATOR.location.country}. Estudia arquitectura y produce contenido de humor cotidiano, vida universitaria y lifestyle en TikTok e Instagram.`,
+      answer: `Soy ${CREATOR.displayName}, creador de contenido de ${CREATOR.location.city}, ${CREATOR.location.province}, ${CREATOR.location.country}. Estudio arquitectura y produzco contenido de humor cotidiano, vida universitaria y lifestyle en TikTok e Instagram.`,
     },
     {
       question: `¿Cuántos seguidores tiene ${CREATOR.displayName} en TikTok e Instagram?`,
-      answer: `${CREATOR.displayName} tiene ${tiktok.followersDisplay} seguidores en TikTok bajo el usuario ${tiktok.handle}, y ${instagram.followersDisplay} seguidores en Instagram bajo el usuario ${instagram.handle}.`,
+      answer: `Tengo ${tiktok.followersDisplay} seguidores en TikTok bajo el usuario ${tiktok.handle}, y ${instagram.followersDisplay} seguidores en Instagram bajo el usuario ${instagram.handle}.`,
     },
     {
       question: "¿Cuál es el alcance promedio de sus videos en TikTok?",
-      answer: `La cuenta ${tiktok.handle} promedia ${avgReach.value} vistas por video (últimos 28 días, datos de TikTok Studio), y acumula ${tiktok.secondaryMetric.value} de likes totales sobre ${tiktok.followersDisplay} seguidores.`,
+      answer: `Mi cuenta ${tiktok.handle} promedia ${avgReach.value} vistas por video (últimos 28 días, datos de TikTok Studio), y acumula ${tiktok.secondaryMetric.value} de likes totales sobre ${tiktok.followersDisplay} seguidores.`,
     },
     {
       question: `¿Qué tipo de contenido hace ${CREATOR.displayName}?`,
       answer:
-        'Cuatro formatos principales: humor y sketches cotidianos, vida universitaria en la serie "Arqui" sobre su carrera de arquitectura, contenido de lifestyle y haul, y unboxing con reseñas de producto.',
+        'Hago cuatro formatos principales: humor y sketches cotidianos, vida universitaria en la serie "Arqui" sobre mi carrera de arquitectura, contenido de lifestyle y haul, y unboxing con reseñas de producto.',
     },
     {
       question: `¿Cuánto cobra ${CREATOR.displayName} por un post patrocinado?`,
       answer:
-        "La tarifa depende del tipo de campaña (post único, serie de contenido, ambassador, evento), la plataforma y los deliverables solicitados. Para recibir una cotización personalizada, completá el formulario de propuestas de este sitio.",
+        "Depende del tipo de campaña (post único, serie de contenido, ambassador, evento), la plataforma y los deliverables. Completá el formulario de propuestas de este sitio y te paso una cotización personalizada.",
     },
     {
       question: `¿Con qué marcas trabajó ${CREATOR.displayName} antes?`,
-      answer: `${CREATOR.displayName} trabajó con marcas como Shein (como ambassador), Adrenaline, Luqstoff, Firmoo y Suprabond, con reseñas de producto y contenido patrocinado, además de colaboraciones por canje con varios emprendimientos locales. El detalle de cada colaboración está en la sección de casos de este media kit.`,
+      answer: `Trabajé con marcas como Shein (como ambassador), Adrenaline, Luqstoff, Firmoo y Suprabond, con reseñas de producto y contenido patrocinado, además de colaboraciones por canje con varios emprendimientos locales. El detalle de cada colaboración está en la sección de casos de este media kit.`,
     },
     {
       question: `¿Cómo se contacta a ${CREATOR.displayName} para una propuesta de marca?`,
-      answer: `A través del formulario de propuestas de este sitio, que envía la información directamente a ${CREATOR.displayName}, o por email a ${CREATOR.email}.`,
+      answer: `A través del formulario de propuestas de este sitio, que me llega directamente, o por email a ${CREATOR.email}.`,
     },
     {
       question: `¿Dónde está ubicado ${CREATOR.displayName}?`,
-      answer: `${CREATOR.displayName} vive en ${CREATOR.location.city}, ${CREATOR.location.province}, ${CREATOR.location.country}.`,
+      answer: `Vivo en ${CREATOR.location.city}, ${CREATOR.location.province}, ${CREATOR.location.country}.`,
     },
   ];
 }

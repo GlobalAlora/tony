@@ -23,7 +23,7 @@ const TITLE = `${CREATOR.displayName} — Media Kit para Marcas`;
 
 export async function generateMetadata(): Promise<Metadata> {
   const totalFollowers = await getTotalFollowersDisplay();
-  const description = `${CREATOR.displayName} es creador de contenido en ${CREATOR.location.city}, ${CREATOR.location.country}: humor, vida universitaria y lifestyle para más de ${totalFollowers} seguidores en redes sociales. Media kit con métricas, audiencia y formulario de propuestas.`;
+  const description = `Soy ${CREATOR.displayName}, creador de contenido en ${CREATOR.location.city}, ${CREATOR.location.country}: humor, vida universitaria y lifestyle para más de ${totalFollowers} seguidores en redes sociales. Media kit con métricas, audiencia y formulario de propuestas.`;
 
   return {
     metadataBase: new URL(SITE_URL),

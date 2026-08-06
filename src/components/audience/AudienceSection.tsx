@@ -44,7 +44,7 @@ export function AudienceSection() {
             headingId="audience-heading"
             eyebrow="Audiencia"
             title="A quién le llega el contenido"
-            lead="Demografía de sus seguidores en TikTok, según datos oficiales de TikTok Studio."
+            lead="Demografía de mis seguidores en TikTok, según datos oficiales de TikTok Studio."
           />
           {AUDIENCE_DATA_IS_PLACEHOLDER ? (
             <span className="mb-1 inline-flex items-center gap-1.5 rounded-full border border-dashed border-line-strong px-3 py-1 text-xs font-semibold text-ink-faint">

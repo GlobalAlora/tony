@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/Button";
+import { LiveDataBadge } from "@/components/ui/LiveDataBadge";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getFaqItems } from "@/lib/constants/faq";
@@ -25,6 +26,7 @@ export async function FAQSection() {
           eyebrow="Preguntas frecuentes"
           title="Todo lo que una marca necesita saber"
         />
+        <LiveDataBadge className="mt-4" />
 
         <dl className="mt-10 divide-y divide-line">
           {faqItems.map((item, i) => (

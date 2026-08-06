@@ -22,7 +22,7 @@ export function ContentPillarsSection() {
           headingId="pillars-heading"
           eyebrow="Formatos"
           title="Cuatro pilares de contenido, un mismo tono"
-          lead="Cada pilar es un formato probado con su comunidad — listo para adaptarse al brief de una marca."
+          lead="Cada pilar es un formato probado con mi comunidad — listo para adaptarse al brief de una marca."
         />
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2">

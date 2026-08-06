@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import { CountUp } from "@/components/ui/CountUp";
+import { LiveDataBadge } from "@/components/ui/LiveDataBadge";
 import { HeroCarousel } from "@/components/hero/HeroCarousel";
 import {
   CREATOR,
@@ -46,7 +47,7 @@ export async function Hero() {
           </h1>
 
           <p className="mt-6 max-w-xl text-[length:var(--text-lead)] leading-relaxed text-ink-muted text-pretty">
-            Creador de contenido en {CREATOR.location.city},{" "}
+            Soy creador de contenido en {CREATOR.location.city},{" "}
             {CREATOR.location.province}. Humor cotidiano, vida universitaria
             y lifestyle para más de {totalFollowers} seguidores en redes
             sociales.
@@ -84,6 +85,8 @@ export async function Hero() {
               </div>
             ) : null}
           </dl>
+
+          <LiveDataBadge className="mt-3" />
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <Button href={`#${SECTION_IDS.proposalForm}`} size="lg">

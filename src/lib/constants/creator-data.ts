@@ -29,8 +29,8 @@ export const CREATOR = {
   },
   email: "piornotony@gmail.com",
   bio: [
-    "Tony Piorno es creador de contenido en La Plata, Buenos Aires. Estudia arquitectura y combina el humor cotidiano con su vida universitaria en la serie \"Arqui\", además de contenido de lifestyle, haul y unboxing.",
-    "Su tono es cercano, espontáneo y humorístico — el tipo de contenido que se comparte porque se siente real, no producido. Esa cercanía es lo que sostiene el engagement con su comunidad.",
+    "Soy Tony Piorno, creador de contenido en La Plata, Buenos Aires. Estudio arquitectura y combino el humor cotidiano con mi vida universitaria en la serie \"Arqui\", además de contenido de lifestyle, haul y unboxing.",
+    "Mi tono es cercano, espontáneo y humorístico — el tipo de contenido que se comparte porque se siente real, no producido. Esa cercanía es lo que sostiene el engagement con mi comunidad.",
   ],
 } as const;
 
@@ -240,7 +240,7 @@ export const CONTENT_PILLARS: ContentPillar[] = [
     id: "unboxing",
     title: "Unboxing & reseñas",
     description:
-      "Muestra el producto en cámara al abrirlo y da su opinión real — el formato preferido de las marcas para lanzamientos.",
+      "Muestro el producto en cámara al abrirlo y doy mi opinión real — el formato preferido de las marcas para lanzamientos.",
     keywords: ["unboxing", "reseñas", "producto"],
     embedUrls: ["https://www.tiktok.com/@t0ni_00/video/7637289567766301972"],
   },
@@ -248,7 +248,7 @@ export const CONTENT_PILLARS: ContentPillar[] = [
     id: "arqui",
     title: "Vida universitaria — \"Arqui\"",
     description:
-      "Serie propia sobre su día a día estudiando arquitectura: entregas, trasnoches, maquetas y la cultura de facultad.",
+      "Serie propia sobre mi día a día estudiando arquitectura: entregas, trasnoches, maquetas y la cultura de facultad.",
     keywords: ["universidad", "arquitectura", "estudiantes"],
     embedUrls: ["https://www.tiktok.com/@t0ni_00/video/7632879811748171029"],
   },
@@ -256,7 +256,7 @@ export const CONTENT_PILLARS: ContentPillar[] = [
     id: "humor",
     title: "Humor y sketches cotidianos",
     description:
-      "Situaciones del día a día llevadas al sketch — el formato que más engagement genera dentro de su comunidad.",
+      "Situaciones del día a día llevadas al sketch — el formato que más engagement genera dentro de mi comunidad.",
     keywords: ["humor", "sketches", "comedia"],
     embedUrls: ["https://www.tiktok.com/@t0ni_00/video/7443879490331118903"],
   },
@@ -334,7 +334,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     id: "suprabond",
     brandName: "Suprabond",
     summary:
-      "Le enviaron el pegamento para mostrar su uso pegando maquetas de arquitectura.",
+      "Me enviaron el pegamento para mostrarlo pegando maquetas de arquitectura.",
     campaignType: "Post único",
     isExample: false,
   },
@@ -342,7 +342,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     id: "emprendimientos",
     brandName: "Emprendimientos locales",
     summary:
-      "Colaboraciones por canje con distintos emprendimientos: recibe el producto a cambio de mostrarlo en su contenido.",
+      "Colaboraciones por canje con distintos emprendimientos: recibo el producto a cambio de mostrarlo en mi contenido.",
     campaignType: "Canje",
     isExample: false,
   },
