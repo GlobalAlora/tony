@@ -5,7 +5,6 @@ import {
   Heading,
   Hr,
   Html,
-  Link,
   Preview,
   Text,
 } from "@react-email/components";
@@ -94,10 +93,9 @@ export function ProposalNotificationEmail({
           <Hr style={{ borderColor: "#e6e6e6", margin: "24px 0" }} />
 
           <Text style={{ fontSize: "13px", color: "#6b6b6b", margin: 0 }}>
-            Respondé directamente a{" "}
-            <Link href={`mailto:${contactEmail}`}>{contactEmail}</Link>, o
-            gestioná el estado de esta propuesta desde el Table Editor de
-            Supabase.
+            Respondé directamente a este email — el &quot;Responder&quot; ya
+            va a {contactEmail} —, o gestioná el estado de esta propuesta
+            desde el Table Editor de Supabase.
           </Text>
         </Container>
       </Body>
